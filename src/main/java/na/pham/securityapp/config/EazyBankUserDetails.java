@@ -26,13 +26,13 @@ public class EazyBankUserDetails implements UserDetailsService {
         String userName = null;
         String password = null;
         List<GrantedAuthority> authorities = null;
-        Customer customer = customerRepository.findByEmail(username);
+        Customer customer = customerRepository.findByEmail(username).get(0);
 
         if (Objects.isNull(customer)) {
             throw new UsernameNotFoundException("Not found");
         } else {
             userName = customer.getEmail();
-            password = customer.getPassword();
+            password = customer.getPwd();
             authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(customer.getRole()));
         }
